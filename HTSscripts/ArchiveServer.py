@@ -42,7 +42,7 @@ def is_number(s):
 		
 def main():
 	syspath = os.path.dirname(sys.argv[0])
-	fullpath = os.path.abspath(syspath)
+	fullpath = os.getcwd()
 	today=time.gmtime()
 	fltoday=float(today.tm_year)+(float(today.tm_mon)-1.0)/12
 		
