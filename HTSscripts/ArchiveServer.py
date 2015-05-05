@@ -55,6 +55,7 @@ def main():
 	if (os.path.exists(datdirect)):
 		DATs=getDAT(datdirect)
 	else:
+		print(datdirect)
 		print("Output_Data directory does not exist!")
 		sys.exit(0)
 
