@@ -45,10 +45,10 @@ def main():
     rootDir=os.getcwd()
     #args=["QFA0060","4.0"]
 
-    expt=args.exptID
-    cutoff=args.cutoff
-    treatment=args.treatment
-    medium=args.medium
+    expt=str(args.exptID)
+    cutoff=float(args.cutoff)
+    treatment=str(args.treatment)
+    medium=str(args.medium)
     copyphotos=args.photos
     
     exptType=expt[0:-4]
@@ -56,12 +56,12 @@ def main():
     dataDir=os.path.join(rootDir,exptType+"_EXPERIMENTS")
     expDescFile=os.path.join(dataDir,expt,"AUXILIARY","ExptDescription.txt")
     metaDF=pandas.read_csv(expDescFile,sep="\t")
-    if cutoff is not None:
+    if cutoff is None:
         cutoff=999999999.0
     if treatment is not None:
-        metaDF=metaDF[metaDF["Treatment"]==treatment]
+        metaDF=metaDF[metaDF["Treatment"].astype(str)==str(treatment)]
     if medium is not None:
-        metaDF=metaDF[metaDF["Medium"]==medium]
+        metaDF=metaDF[metaDF["Medium"].astype(str)==str(medium)]
 
     # Strip rows that have nan in barcode column (e.g. QFA0132)
     #metaDF=metaDF[pandas.notnull(metaDF["Barcode"])]
