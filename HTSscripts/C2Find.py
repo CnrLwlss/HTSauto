@@ -59,9 +59,9 @@ def main():
     if cutoff is not None:
         cutoff=999999999.0
     if treatment is not None:
-        metaDF=metaDF[metaDF["Treatment"]==treatment]]
+        metaDF=metaDF[metaDF["Treatment"]==treatment]
     if medium is not None:
-        metaDF=metaDF[metaDF["Medium"]==medium]]
+        metaDF=metaDF[metaDF["Medium"]==medium]
 
     # Strip rows that have nan in barcode column (e.g. QFA0132)
     #metaDF=metaDF[pandas.notnull(metaDF["Barcode"])]
