@@ -4,7 +4,7 @@
 # If a cutoff time not specified, use 5.0 days
 
 import sys
-import getopt
+import argparse
 import os
 import pandas
 import colonyzer2.functions as c2
