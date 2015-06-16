@@ -44,6 +44,7 @@ def main():
     # Should execute this script from LOGS3 directory
     rootDir=os.getcwd()
     #args=["QFA0060","4.0"]
+    print(args)
 
     expt=str(args.exptID)
     cutoff=float(args.cutoff)

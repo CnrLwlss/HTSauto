@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(name='HTSauto',
-      version='1.0.0',
+      version='1.0.2',
       packages=['HTSscripts'],
       description='Helper functions for handling QFA data',
       long_description=open('README.txt').read(),
