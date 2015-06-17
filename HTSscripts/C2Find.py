@@ -60,10 +60,12 @@ def main():
     metaDF=pandas.read_csv(expDescFile,sep="\t")
 
     print("Possible treatments:")
-    print(string.join(metaDF["Treatment"].unique(),sep="\t"))
+    trts=metaDF["Treatment"].unique()
+    print(string.join([str(trt) for trt in trts],sep="\t"))
 
     print("Possible media:")
-    print(string.join(metaDF["Medium"].unique(),sep="\t"))
+    meds=metaDF["Medium"].unique()
+    print(string.join([str(med) for med in meds],sep="\t"))
 
     # Default behaviour for missing optional arguments
     if args.cutoff is not None:
