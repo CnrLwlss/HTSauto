@@ -1,7 +1,11 @@
+# Finds images from exptID in our archive and dumps file locations to .json file
+# Only images where a specific treatment and medium were applied, captured before a cutoff period after inoculation, are considered
+# Optionally copies symlinks to images or image files themselves to pdump directory for inspection/download
 # This should read in arguments from the command line
 # First argument: experiment ID (e.g. QFA0060)
 # Second (optional) argument: cutoff time after inoculation (days)
 # If a cutoff time not specified, use 5.0 days
+
 
 import sys
 import argparse
@@ -30,10 +34,10 @@ def toDelete(filename):
     return(candidates)
 
 def parseArgs():
-    parser=argparse.ArgumentParser(description="Build directory of symlinks/shortcuts to images from QFA file archive.")
+    parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particularly QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.")
     parser.add_argument("exptID", type=str, help="QFA experiment ID, e.g. QFA00001")
-    parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).")
-    parser.add_argument("-t","--treatment",type=str, help="Only return images of plates from experiment which experienced this treatment (e.g. 30).")
+    parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).",default=5.0)
+    parser.add_argument("-t","--treatment",type=str, help="Only return images of plates from experiment to which treatment was applied (e.g. 30).")
     parser.add_argument("-m","--medium",type=str, help="Only return images of plates from experiment which contained this medium (e.g. CSM).")
     parser.add_argument("-p","--photos",action='store_true', help="If this flag is specified, return actual photos rather than the default behaviour, which is to return symlinks/shortcuts.")
     args = parser.parse_args()
@@ -43,8 +47,6 @@ def main():
     args=parseArgs()
     # Should execute this script from LOGS3 directory
     rootDir=os.getcwd()
-    #args=["QFA0060","4.0"]
-    print(args)
 
     expt=str(args.exptID)
     cutoff=float(args.cutoff)

@@ -2,16 +2,20 @@ import os
 import sys
 import pandas
 import json
+import argparse
+
+def parseArgs():
+    parser=argparse.ArgumentParser(description="Gathers completed imagelog files for a QFA experiment, concatenates them and writes files to appropriate IMAGELOGS directory.  Should be executed from LOGS3 directory.  Requires C2.json file (i.e. run C2Find before running C2Merge).")
+    parser.add_argument("exptID", type=str, help="QFA experiment ID, e.g. QFA00001")
+    args = parser.parse_args()
+    return(args)
 
 def main():
-
-	args=sys.argv
+	args=parseArgs()
 	# Should execute this script from LOGS3 directory
 	rootDir=os.getcwd()
-	#rootDir="F://LOGS3"
-	#args=["dummy","QFA0060"]
 
-	expt=args[1]
+	expt=str(args.exptID)
 	exptType=expt[0:-4]
 	dataDir=os.path.join(rootDir,exptType+"_EXPERIMENTS")
 	dictOut=os.path.join(dataDir,expt,"AUXILIARY",expt+'_C2.json')
