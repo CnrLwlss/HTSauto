@@ -15,6 +15,7 @@ import colonyzer2.functions as c2
 from datetime import datetime
 import json
 import shutil
+import string
 
 def toDelete(filename):
     '''Generate list of output files which should be deleted'''
@@ -59,10 +60,10 @@ def main():
     metaDF=pandas.read_csv(expDescFile,sep="\t")
 
     print("Possible treatments:")
-    print(metaDF["Treatment"].unique())
+    print(string.join(metaDF["Treatment"].unique(),sep="\t"))
 
     print("Possible media:")
-    print(metaDF["Medium"].unique())
+    print(string.join(metaDF["Medium"].unique(),sep="\t"))
 
     # Default behaviour for missing optional arguments
     if args.cutoff is not None:
@@ -73,10 +74,12 @@ def main():
     if args.treatment is not None:
         treatment=str(args.treatment)
         metaDF=metaDF[metaDF["Treatment"].astype(str)==treatment]
+        print("Only take treatment "+treatment+" for "+expt)
         
     if args.medium is not None:
         medium=str(args.medium)
         metaDF=metaDF[metaDF["Medium"].astype(str)==medium]
+        print("Only take medium "+medium+" for "+expt)
 
     # Strip rows that have nan in barcode column (e.g. QFA0132)
     #metaDF=metaDF[pandas.notnull(metaDF["Barcode"])]
