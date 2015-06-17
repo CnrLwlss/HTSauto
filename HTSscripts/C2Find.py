@@ -59,6 +59,13 @@ def main():
     dataDir=os.path.join(rootDir,exptType+"_EXPERIMENTS")
     expDescFile=os.path.join(dataDir,expt,"AUXILIARY","ExptDescription.txt")
     metaDF=pandas.read_csv(expDescFile,sep="\t")
+
+    print("Possible treatments:")
+    print(metaDF["Treatment"].unique())
+
+    print("Possible media:")
+    print(metaDF["Medium"].unique())
+    
     if cutoff is None:
         cutoff=999999999.0
     if treatment is not None:
