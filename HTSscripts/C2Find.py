@@ -36,7 +36,7 @@ def toDelete(filename):
 def parseArgs():
     parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particularly QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.")
     parser.add_argument("exptID", type=str, help="QFA experiment ID, e.g. QFA00001")
-    parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).",default=5.0)
+    parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).")
     parser.add_argument("-t","--treatment",type=str, help="Only return images of plates from experiment to which treatment was applied (e.g. 30).")
     parser.add_argument("-m","--medium",type=str, help="Only return images of plates from experiment which contained this medium (e.g. CSM).")
     parser.add_argument("-p","--photos",action='store_true', help="If this flag is specified, return actual photos rather than the default behaviour, which is to return symlinks/shortcuts.")
@@ -44,14 +44,12 @@ def parseArgs():
     return(args)
 
 def main():
+    #sys.argv=['test', 'QFA0018']
     args=parseArgs()
     # Should execute this script from LOGS3 directory
     rootDir=os.getcwd()
 
     expt=str(args.exptID)
-    cutoff=float(args.cutoff)
-    treatment=str(args.treatment)
-    medium=str(args.medium)
     copyphotos=args.photos
     
     exptType=expt[0:-4]
@@ -65,13 +63,20 @@ def main():
 
     print("Possible media:")
     print(metaDF["Medium"].unique())
-    
-    if cutoff is None:
+
+    # Default behaviour for missing optional arguments
+    if args.cutoff is not None:
+        cutoff=float(args.cutoff)
+    else:
         cutoff=999999999.0
-    if treatment is not None:
-        metaDF=metaDF[metaDF["Treatment"].astype(str)==str(treatment)]
-    if medium is not None:
-        metaDF=metaDF[metaDF["Medium"].astype(str)==str(medium)]
+        
+    if args.treatment is not None:
+        treatment=str(args.treatment)
+        metaDF=metaDF[metaDF["Treatment"].astype(str)==treatment]
+        
+    if args.medium is not None:
+        medium=str(args.medium)
+        metaDF=metaDF[metaDF["Medium"].astype(str)==medium]
 
     # Strip rows that have nan in barcode column (e.g. QFA0132)
     #metaDF=metaDF[pandas.notnull(metaDF["Barcode"])]
