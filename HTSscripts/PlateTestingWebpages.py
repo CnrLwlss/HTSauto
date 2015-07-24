@@ -74,7 +74,7 @@ for imname in filelist:
     <a name="intro"><h2>Introduction</h2></a>
 
     <body>
-    <img src="preview.png" alt="SGA Image data" />
+    <img src="Preview.png" alt="SGA Image data" />
 
 
     """
