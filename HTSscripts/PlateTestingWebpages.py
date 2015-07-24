@@ -44,6 +44,7 @@ for imname in pngfilenames:
 # Start creating html files for building the image maps
 HTML='''<html>
 
+<<<<<<< HEAD
 <!doctype html>
 <html lang=en> 
 <head>
@@ -53,6 +54,10 @@ HTML='''<html>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="CLstyle.css">
 </head>
+=======
+    <body>
+    <img src="Preview.png" alt="SGA Image data" />
+>>>>>>> origin/master
 
 <body>
 <article id="main">
