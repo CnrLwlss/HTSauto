@@ -4,8 +4,7 @@
 # This should read in arguments from the command line
 # First argument: experiment ID (e.g. QFA0060)
 # Second (optional) argument: cutoff time after inoculation (days)
-# If a cutoff time not specified, use 5.0 days
-
+# If a cutoff time not specified, include all images
 
 import sys
 import argparse
@@ -35,12 +34,12 @@ def toDelete(filename):
     return(candidates)
 
 def parseArgs():
-    parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particularly QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.")
+    parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particularly QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.  Execute from LOGS3 directory.")
     parser.add_argument("exptID", type=str, help="QFA experiment ID, e.g. QFA00001")
     parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).")
     parser.add_argument("-t","--treatment",type=str, help="Only return images of plates from experiment to which treatment was applied (e.g. 30).")
     parser.add_argument("-m","--medium",type=str, help="Only return images of plates from experiment which contained this medium (e.g. CSM).")
-    parser.add_argument("-p","--photos",action='store_true', help="If this flag is specified, return actual photos rather than the default behaviour, which is to return symlinks/shortcuts.")
+    parser.add_argument("-p","--photos",action='store_true', help="Copy symlinks to images to ../pdump directory.")
     args = parser.parse_args()
     return(args)
 
