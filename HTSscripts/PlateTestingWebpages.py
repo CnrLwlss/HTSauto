@@ -25,11 +25,13 @@ if len(newfilelist)>0:
         small=im.resize((neww,newh),Image.ANTIALIAS)
         small.save(png)
 
+# If we have already generated individual .pngs, probably better NOT to generate one big preview in this case
+# Especially if we are not going to build a massive image map
 Nimages=len(pngfilenames)
 bigim=Image.new("RGB",(2*neww,int(math.ceil(float(Nimages)/2.0))*newh))
 
 row,col=0,0
-for imname in filelist:
+for imname in pngfilenames:
     im=Image.open(imname)
     bigim.paste(im,(col*neww,row*newh,(col+1)*neww,(row+1)*newh))
     print row,col
@@ -37,38 +39,37 @@ for imname in filelist:
     if col>1:
         col=0
         row=row+1
-
     bigim.save("Preview.png")
-    
-    htmlroot="PlateTesting"
-    Scroller="High Throughput Service QFA image browser "+htmlroot
-    # Start creating html files for building the image maps
-    SGAString="""<html>
 
+# Start creating html files for building the image maps
+HTML='''<html>
 
-    <!doctype html>
-    <html lang=en> 
-    <head>
-    <meta charset=utf-8> 
-    <title>Newcastle University HTSF Plate Testing</title> 
-    <meta name="desciption" content="High Throughput Screening Facility Newcastle University.">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="CLstyle.css">
-    </head>
+<!doctype html>
+<html lang=en> 
+<head>
+<meta charset=utf-8> 
+<title>Newcastle University HTSF Plate Testing</title> 
+<meta name="desciption" content="High Throughput Screening Facility Newcastle University.">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="CLstyle.css">
+</head>
 
-    <article id="main">
-    <h1>High Throughput Screening Facility</h1> 
-    <hr></hr>
+<body>
+<article id="main">
+<h1>High Throughput Screening Facility</h1> 
+'''
 
-    <a name="intro"><h2>Introduction</h2></a>
+for jpg,png in zip(newfilelist,pngfilenames):
+	fname=os.path.splitext(png)[0]
+	HTML+='<h2>{}<h2>\n'.format(fname)
+	HTML+='<a href="{}"><img src="{}></a>\n'.format(jpg,png)
 
-    <body>
-    <img src="preview.png" alt="SGA Image data" />
-
-
-    """
-
-    # Generate html image maps
-    fout=open(htmlroot+'.html','w')
-    fout.write(SGAString+"</map></body></html>")
-    fout.close()
+HTML+='''</article>
+</body>
+</html>
+'''
+	
+# Generate html
+fout=open('PlateTesting.html','w')
+fout.write(HTML)
+fout.close()
