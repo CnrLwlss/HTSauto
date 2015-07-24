@@ -9,32 +9,23 @@ filelistJPG=[os.path.splitext(f)[0] for f in allfiles if f[-4:] in ['.jpg','.JPG
 filelistPNG=[os.path.splitext(f)[0] for f in allfiles if f[-4:] in ['.png','.PNG']]
 newfiles=set(filelistJPG)-set(filelistPNG)
 newfilelist=[f for f in allfiles if os.path.splitext(f)[0] in newfiles]
+pngfilenames=[os.path.splitext(f)[0]+".png" for f in newfilelist]
 
 #check to see if there are any new files, if not then ignore the rest, if there
 #are then resize and build a new preview file
 
 if len(newfilelist)>0:
-
     im0=Image.open(newfilelist[0])
     w,h=im0.size
     neww=resizeWidth
     newh=int(round((float(neww)/float(w))*h))
-
-    for imname in newfilelist:
-        im=Image.open(imname)
+    for jpg,png in zip(newfilelist,pngfilenames):
+		print jpg+" -> shrinking -> "+png
+        im=Image.open(jpg)
         small=im.resize((neww,newh),Image.ANTIALIAS)
-        small.save(imname[0:-4]+".png")
-        
-        print imname
-         
-allfiles=os.listdir(os.getcwd())
-filelist=[f for f in allfiles if f[-4:] in ['.png','.PNG']]
-del filelist[-1]
-Nimages=len(filelist)
-im0=Image.open(filelist[0])
-w,h=im0.size
-neww=resizeWidth
-newh=int(round((float(neww)/float(w))*h))
+        small.save(png)
+
+Nimages=len(pngfilenames)
 bigim=Image.new("RGB",(2*neww,int(math.ceil(float(Nimages)/2.0))*newh))
 
 row,col=0,0
