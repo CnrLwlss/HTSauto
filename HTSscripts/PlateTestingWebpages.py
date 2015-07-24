@@ -5,12 +5,10 @@ resizeWidth=500
 
 #Get jpgs for which there are no corresponding pngs
 allfiles=os.listdir(os.getcwd())
-filelistJPG=[f for f in allfiles if f[-4:] in ['.jpg','.JPG','.jpeg','.JPEG']]
-filelistJPG=[os.path.splitext(each)[0] for each in filelistJPG]
-filelistPNG=[f for f in allfiles if f[-4:] in ['.png','.PNG']]
-filelistPNG=[os.path.splitext(each)[0] for each in filelistPNG]
+filelistJPG=[os.path.splitext(f)[0] for f in allfiles if f[-4:] in ['.jpg','.JPG','.jpeg','.JPEG']]
+filelistPNG=[os.path.splitext(f)[0] for f in allfiles if f[-4:] in ['.png','.PNG']]
 newfiles=set(filelistJPG)-set(filelistPNG)
-newfilelist=[filename + '.JPG' for filename in newfiles]
+newfilelist=[f for f in allfiles if os.path.splitext(f)[0] in newfiles]
 
 #check to see if there are any new files, if not then ignore the rest, if there
 #are then resize and build a new preview file
