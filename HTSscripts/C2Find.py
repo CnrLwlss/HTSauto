@@ -93,7 +93,7 @@ def main():
     Archive_384=["/home/yeastimages/ARCHIVE_IMAGES"]
 
     # Should 768 be included in QFA (e.g. Pombe QFA)? What about 96-format?
-    searchOptions={"QFA":List_384+Archive_384,"MQFQFA":List_384,"SGA":List_1536,"MQFSGA":List_1536}
+    searchOptions={"QFA":List_384+Archive_384,"MQFQFA":List_384,"SGA":List_1536+List_768,"MQFSGA":List_1536}
     searchDirs=searchOptions[exptType]
 
     # TEMPFIX
