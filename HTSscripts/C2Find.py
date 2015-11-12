@@ -96,13 +96,18 @@ def main():
     searchOptions={"QFA":List_384+Archive_384,"MQFQFA":List_384,"SGA":List_1536+List_768,"MQFSGA":List_1536}
     searchDirs=searchOptions[exptType]
 
-    # TEMPFIX
-    #searchDirs=["F:\\Matthew_stn1-13_QFA60TMP","F:\\CDC13Heterogeneity"]
-
-    # Assume that all barcodes have the same format as the first Barcode in metaDF
     barcLen=len(metaDF["Barcode"].iloc[0])
-    barcDict=c2.merge_lodols([c2.getBarcodes(directory,barcRange=(0,barcLen),checkDone=False) for directory in searchDirs])
-
+    
+    bdictfname=exptType+"_file_locations.json"
+    if not os.path.isfile(bdictfname):
+        # Assume that all barcodes have the same format as the first Barcode in metaDF
+        barcDict=c2.merge_lodols([c2.getBarcodes(directory,barcRange=(0,barcLen),checkDone=False) for directory in searchDirs])
+        with open(bdictfname, 'wb') as f:
+            json.dump(barcDict, f)
+    else:
+        with open(bdictfname) as f:
+            barcDict=json.load(f)
+        
     # Check that all the barcodes in metaDF appear in the list of files, otherwise throw an error?
     if not set(metaDF["Barcode"])<set(barcDict.keys()):
             print(set(metaDF["Barcode"]))

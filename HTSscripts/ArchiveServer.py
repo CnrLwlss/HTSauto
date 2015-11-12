@@ -25,6 +25,8 @@ def getDAT(fullpath):
     for f in allfiles:
         if f[-7:]=="OUT.dat":
             allDAT.append(f[0:-7])
+        elif f[-4:]==".dat":
+            allDAT.append(f[0:-4])
     return allDAT
 
 def getDate(fname):
