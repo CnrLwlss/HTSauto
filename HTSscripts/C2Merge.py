@@ -46,7 +46,6 @@ def main():
 	for i,f in enumerate(outFiles):
             outf=f
             datf=datFiles[i]
-            print f
             checkout=checkFile(outf,deleteEmpty=True)
             checkdat=checkFile(datf,deleteEmpty=True)
 
