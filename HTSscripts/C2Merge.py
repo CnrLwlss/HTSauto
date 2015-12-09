@@ -10,6 +10,19 @@ def parseArgs():
     args = parser.parse_args()
     return(args)
 
+def checkFile(f,verbose=True,deleteEmpty=False):
+    if os.path.isfile(f):
+        if sum(1 for line in open(f))<1:
+            if verbose: print(f+" EMPTY")
+            if deleteEmpty:
+                print("Deleting "+f)
+                os.remove(f)
+            return(False)
+    else:
+        if verbose: print(f+" MISSING")
+        return(False)
+    return(True)
+
 def main():
 	args=parseArgs()
 	# Should execute this script from LOGS3 directory
@@ -30,9 +43,16 @@ def main():
 	outFiles=[os.path.join(os.path.dirname(f),"Output_Data",os.path.basename(f).split(".")[0]+".out") for f in barcFiles]
 	datFiles=[os.path.join(os.path.dirname(f),"Output_Data",os.path.basename(f).split(".")[0]+".dat") for f in barcFiles]
 
+	for i,f in enumerate(outFiles):
+            outf=f
+            datf=datFiles[i]
+            print f
+            checkout=checkFile(outf,deleteEmpty=True)
+            checkdat=checkFile(datf,deleteEmpty=True)
+
 	print("Reading in expected output files")
-	outDFs=[pandas.read_csv(f,sep="\t") for f in outFiles]
-	datDFs=[pandas.read_csv(f,sep="\t",header=None) for f in datFiles]
+	outDFs=[pandas.read_csv(f,sep="\t") if (os.path.isfile(f) and sum(1 for line in open(f))>0)  else pandas.DataFrame() for f in outFiles]
+	datDFs=[pandas.read_csv(f,sep="\t",header=None) if (os.path.isfile(f) and sum(1 for line in open(f))>0)  else pandas.DataFrame() for f in datFiles]
 
 	print("Merging output files")
 	outDF=pandas.concat(outDFs)
