@@ -43,7 +43,7 @@ def parseArgs():
     args = parser.parse_args()
     return(args)
 
-def main():
+if __name__ == '__main__':
     #sys.argv=['test', 'QFA0018']
     args=parseArgs()
     # Should execute this script from LOGS3 directory
@@ -51,7 +51,7 @@ def main():
 
     expt=str(args.exptID)
     copyphotos=args.photos
-    
+
     exptType=expt[0:-4]
 
     dataDir=os.path.join(rootDir,exptType+"_EXPERIMENTS")
@@ -97,7 +97,7 @@ def main():
     searchDirs=searchOptions[exptType]
 
     barcLen=len(metaDF["Barcode"].iloc[0])
-    
+
     bdictfname=exptType+"_file_locations.json"
     if not os.path.isfile(bdictfname):
         # Assume that all barcodes have the same format as the first Barcode in metaDF
@@ -110,8 +110,8 @@ def main():
         
     # Check that all the barcodes in metaDF appear in the list of files, otherwise throw an error?
     if not set(metaDF["Barcode"])<set(barcDict.keys()):
-            print(set(metaDF["Barcode"]))
-            raise Exception("There are barcodes in the ExptDescription.txt file for which I cannot find any images!")
+        print(set(metaDF["Barcode"]))
+        raise Exception("There are barcodes in the ExptDescription.txt file for which I cannot find any images!")
 
     barcDict={x:barcDict[x] for x in metaDF["Barcode"]}
 
@@ -119,42 +119,37 @@ def main():
     print("Deleting any pre-existing output files")
     cdelete=0
     for f in barcFiles:
-            print "Deleting analysis files for: "+f
-            candidates=toDelete(f)
-            for c in candidates:
-                    if os.path.exists(c):
-                            os.remove(c)
-                            cdelete=cdelete+1
+        print "Deleting analysis files for: "+f
+        candidates=toDelete(f)
+        for c in candidates:
+            if os.path.exists(c):
+                os.remove(c)
+                cdelete=cdelete+1
     print str(cdelete) + " analysis files (.png, .out & .dat files) deleted..."
                             
     print("Filtering images beyond cutoff from list to be analysed")
     for i in xrange(0,len(metaDF["Barcode"])):
-            barc=metaDF["Barcode"].iloc[i]
-            inoc=metaDF["Start.Time"].iloc[i]
-            flist=barcDict[barc]
-            nimages=len(barcDict[barc])
-            dates=[(c2.getDate(f)-datetime.strptime(inoc,"%Y-%m-%d_%H-%M-%S")).total_seconds()/(24*60*60) for f in flist]
-            barcDict[barc]=[f for ind,f in enumerate(flist) if dates[ind]<=cutoff]
-            print("Will ignore last "+str(nimages-len(barcDict[barc]))+" images from "+barc)
+        barc=metaDF["Barcode"].iloc[i]
+        inoc=metaDF["Start.Time"].iloc[i]
+        flist=barcDict[barc]
+        nimages=len(barcDict[barc])
+        dates=[(c2.getDate(f)-datetime.strptime(inoc,"%Y-%m-%d_%H-%M-%S")).total_seconds()/(24*60*60) for f in flist]
+        barcDict[barc]=[f for ind,f in enumerate(flist) if dates[ind]<=cutoff]
+        print("Will ignore last "+str(nimages-len(barcDict[barc]))+" images from "+barc)
 
     dictOut=os.path.join(dataDir,expt,"AUXILIARY",expt+'_C2.json')
     print("Writing dictionary of images for analysis to file: "+dictOut)
     with open(dictOut, 'wb') as fp:
-            json.dump(barcDict, fp)
+        json.dump(barcDict, fp)
 
     if (copyphotos):
-       dirname="../pdump"
-       if os.path.exists(dirname):
-                    shutil.rmtree(dirname)
-       os.mkdir(dirname)
-       for barc in barcDict.keys():
-                    for f in barcDict[barc]:
-                            fname=os.path.basename(f)
-                            targ=os.path.join(dirname,fname)
-                            print("Copying "+f+" to "+targ)
-                            os.symlink(f,targ)
-
-if __name__ == '__main__':
-    main()
-
-
+        dirname="../pdump"
+        if os.path.exists(dirname):
+            shutil.rmtree(dirname)
+        os.mkdir(dirname)
+        for barc in barcDict.keys():
+            for f in barcDict[barc]:
+                fname=os.path.basename(f)
+                targ=os.path.join(dirname,fname)
+                print("Copying "+f+" to "+targ)
+                os.symlink(f,targ)
