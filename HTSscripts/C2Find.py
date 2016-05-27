@@ -43,7 +43,7 @@ def parseArgs():
     args = parser.parse_args()
     return(args)
 
-if __name__ == '__main__':
+def main():
     #sys.argv=['test', 'QFA0018']
     args=parseArgs()
     # Should execute this script from LOGS3 directory
@@ -153,3 +153,8 @@ if __name__ == '__main__':
                 targ=os.path.join(dirname,fname)
                 print("Copying "+f+" to "+targ)
                 os.symlink(f,targ)
+
+
+
+if __name__ == '__main__':
+    main()

@@ -49,7 +49,7 @@ def reframe(im,wtarg,htarg=0,fill="black"):
         out=ImageOps.expand(tmp,border=(left,0,right,0),fill=fill)
     return(out)
 
-if __name__ == '__main__':
+def main():
     #sys.argv=['test', '384']
     args=parseArgs()
     pfmt=str(args.pfmt)
@@ -86,5 +86,8 @@ if __name__ == '__main__':
         draw.text((400, 200),barc,(255,255,255),font=font)
         draw.text((400, 300),str(barcDate[barc]),(255,255,255),font=font)
         im.save(os.path.join(dirname,pfmt+"_Frame{:06d}.jpg".format(i)))
+
+if __name__ == '__main__':
+    main()
         
         
