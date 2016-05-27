@@ -73,6 +73,7 @@ def main():
     barcBest=c2.getNearest(barcDict,dt)
     barcDate={b:c2.getDate(barcBest[b]) for b in barcBest.keys()}
     sortedDate=sorted(barcDate,key=barcDate.get)
+    sortedBarcs=sorted(barcDate.keys())
     
     dirname="pdump_"+pfmt
     if os.name=="posix":
@@ -82,7 +83,7 @@ def main():
     if os.path.exists(dirname):
         shutil.rmtree(dirname)
     os.mkdir(dirname)
-    for i,barc in enumerate(sortedDate):
+    for i,barc in enumerate(sortedBarcs):
         im=Image.open(barcBest[barc])
         im=reframe(im,1920,1080,fill="black")
         draw = ImageDraw.Draw(im)
