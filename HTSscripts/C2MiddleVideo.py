@@ -74,7 +74,7 @@ def main():
     barcDate={b:c2.getDate(barcBest[b]) for b in barcBest.keys()}
     sortedDate=sorted(barcDate,key=barcDate.get)
     
-    dirname="../pdump"
+    dirname="pdump_"+pfmt
     if os.name=="posix":
         font = ImageFont.truetype("/usr/share/fonts/truetype/msttcorefonts/arial.ttf", 80)
     else:
