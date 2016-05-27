@@ -49,7 +49,7 @@ def reframe(im,wtarg,htarg=0,fill="black"):
         out=ImageOps.expand(tmp,border=(left,0,right,0),fill=fill)
     return(out)
 
-def main():
+if __name__ == '__main__':
     #sys.argv=['test', '384']
     args=parseArgs()
     pfmt=str(args.pfmt)
@@ -75,7 +75,10 @@ def main():
     sortedDate=sorted(barcDate,key=barcDate.get)
     
     dirname="../pdump"
-    font = ImageFont.truetype("arial.ttf", 80)
+    if os.name=="posix":
+        font = ImageFont.truetype("/usr/share/fonts/truetype/msttcorefonts/arial.ttf", 80)
+    else:
+        font = ImageFont.truetype("arial.ttf", 80)
     if os.path.exists(dirname):
         shutil.rmtree(dirname)
     os.mkdir(dirname)
@@ -86,8 +89,5 @@ def main():
         draw.text((400, 200),barc,(255,255,255),font=font)
         draw.text((400, 300),str(barcDate[barc]),(255,255,255),font=font)
         im.save(os.path.join(dirname,pfmt+"_Frame{:06d}.jpg".format(i)))
-
-if __name__ == '__main__':
-    main()
         
         
