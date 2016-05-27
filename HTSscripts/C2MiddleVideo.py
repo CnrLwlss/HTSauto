@@ -50,7 +50,7 @@ def reframe(im,wtarg,htarg=0,fill="black"):
     return(out)
 
 if __name__ == '__main__':
-    sys.argv=['test', '384']
+    #sys.argv=['test', '384']
     args=parseArgs()
     pfmt=str(args.pfmt)
     dt=float(args.dt)
