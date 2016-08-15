@@ -88,8 +88,8 @@ def main():
     # Search in some directories for images that can be analysed
     List_96=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT_96","/home/yeastimages/CAPTURED_IMAGES_STANDALONE_96","/home/yeastimages/CAPTURED_IMAGES_WARMROOM_96"]
     List_384=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT","/home/yeastimages/CAPTURED_IMAGES_STANDALONE","/home/yeastimages/CAPTURED_IMAGES_WARMROOM"]
-    List_768=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT_768","/home/yeastimages/CAPTURED_IMAGES_STANDALONE_768","/home/yeastimages/CAPTURED_IMAGES_WARMROOM_768"]
-    List_1536=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT_1536","/home/yeastimages/CAPTURED_IMAGES_STANDALONE_1536","/home/yeastimages/CAPTURED_IMAGES_WARMROOM_1536"]
+    List_768=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT_768","/home/yeastimages/CAPTURED_IMAGES_STANDALONE_768","/home/yeastimages/CAPTURED_IMAGES_WARMROOM_768","/home/yeastimages/CAPTURED_IMAGES_BM5_768"]
+    List_1536=["/home/yeastimages/CAPTURED_IMAGES_CYTOMAT_1536","/home/yeastimages/CAPTURED_IMAGES_STANDALONE_1536","/home/yeastimages/CAPTURED_IMAGES_WARMROOM_1536","/home/yeastimages/CAPTURED_IMAGES_BM5_1536"]
     Archive_384=["/home/yeastimages/ARCHIVE_IMAGES"]
 
     # Should 768 be included in QFA (e.g. Pombe QFA)? What about 96-format?
@@ -98,7 +98,7 @@ def main():
 
     barcLen=len(metaDF["Barcode"].iloc[0])
 
-    bdictfname=exptType+"_file_locations.json"
+    bdictfname=exptType+"json"
     if not os.path.isfile(bdictfname):
         # Assume that all barcodes have the same format as the first Barcode in metaDF
         barcDict=c2.merge_lodols([c2.getBarcodes(directory,barcRange=(0,barcLen),checkDone=False) for directory in searchDirs])
