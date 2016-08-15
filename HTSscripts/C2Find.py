@@ -98,7 +98,7 @@ def main():
 
     barcLen=len(metaDF["Barcode"].iloc[0])
 
-    bdictfname=exptType+"json"
+    bdictfname=exptType+".json"
     if not os.path.isfile(bdictfname):
         # Assume that all barcodes have the same format as the first Barcode in metaDF
         barcDict=c2.merge_lodols([c2.getBarcodes(directory,barcRange=(0,barcLen),checkDone=False) for directory in searchDirs])
