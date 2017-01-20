@@ -1,5 +1,5 @@
 # HTSauto
-Python module containing helper scripts & functions for handling files for Newcastle University's high-throughput service.  
+Python module containing helper scripts & functions for handling files for the [Lydall lab](http://research.ncl.ac.uk/lydallab/Welcome.html) & Newcastle University's [High Throughput Facility](http://research.ncl.ac.uk/bioHT/).  
 
 ## Installing or updating module
 
@@ -21,16 +21,16 @@ To update an existing copy of the HTSauto repository, execute the following from
 git pull
 ```
 
-Whether installing for the first time, or updating a previous installation:
+Whether installing for the first time, or updating a previous installation, use python to install as follows:
 
 ```Shell
 python setup.py install
 ```
 
-Once python module is installed, the programs listed below should be available as comman-line tools, without directly invoking python.
+Once this python module is installed, the programs listed below should be available as command-line tools, without any further need to directly invoke python.
 
 ## Available programs
-All of these programs should be executed from [LOGS3](https://github.com/lwlss/LOGS3_scripts#archiving-experimental-metadata-and-qfa-results) directory.  Many of them have a small help facility.  To access help, at the command line, input the name of the program followed by "-h".  For example:
+Excepting ArchiveImager and ArchiveServer, all of these programs should be executed from [LOGS3](https://github.com/lwlss/LOGS3_scripts#archiving-experimental-metadata-and-qfa-results) directory.  Many of the programs have a small help facility.  To access help, at the command line, input the name of the program followed by "-h".  For example:
 
 ```Shell
 C2Find -h
