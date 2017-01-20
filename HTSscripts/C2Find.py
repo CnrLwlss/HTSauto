@@ -34,7 +34,7 @@ def toDelete(filename):
     return(candidates)
 
 def parseArgs():
-    parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particularly QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.  Execute from LOGS3 directory.")
+    parser=argparse.ArgumentParser(description="Build .json file describing location of timecourse images for a particular QFA experiment.  Also build directory of symlinks/shortcuts to images, or image files from QFA file archive.  Execute from LOGS3 directory.")
     parser.add_argument("exptID", type=str, help="QFA experiment ID, e.g. QFA00001")
     parser.add_argument("-c","--cutoff",type=float, help="Maximum number of days after inoculation, beyond which images are ignored (e.g. 4.0).")
     parser.add_argument("-t","--treatment",type=str, help="Only return images of plates from experiment to which treatment was applied (e.g. 30).")
